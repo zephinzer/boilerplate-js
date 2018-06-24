@@ -1,0 +1,23 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  },
+  "extends": "google",
+  "plugins": [
+    "babel",
+    "react"
+  ],
+  "rules": {
+    "react/jsx-uses-vars": 1,
+    "react/jsx-uses-react": 1
+  }
+}
