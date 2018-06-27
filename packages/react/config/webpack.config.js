@@ -74,7 +74,7 @@ module.exports = {
   },
   plugins: [
     new WebpackDefinePlugin({
-      'global.app.environment': `"${process.env.NODE_ENV || 'development'}"`,
+      'global.app.environment': `"${process.env.NODE_ENV || 'production'}"`,
     }),
     new WebpackHtmlPlugin({
       template: PATH_HTML,

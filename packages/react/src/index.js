@@ -6,7 +6,6 @@ import {applyMiddleware, combineReducers, createStore} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
 import logger from 'redux-logger';
-
 import MenuBar from './common/MenuBar';
 import Home from './home';
 import Profile from './profile';
@@ -15,15 +14,19 @@ import Settings from './settings';
 import Search from './search';
 import User, {UserId} from './user';
 
+console.info(global.app.environment);
 
 const rootReducer = combineReducers({
   profile: profileReducer,
 });
+const enhancers = applyMiddleware(
+  logger
+);
 const rootStore = createStore(
   rootReducer,
-  composeWithDevTools(
-    applyMiddleware(logger)
-  )
+  (global.app.environment === 'development') ?
+    composeWithDevTools(enhancers)
+    : enhancers
 );
 
 /**
@@ -60,6 +63,8 @@ export default class App extends React.Component {
   }
 };
 
-(module.hot) && module.hot.accept();
+(global.app.environment !== 'development')
+  && (module.hot)
+  && module.hot.accept();
 const applicationEntrypoint = document.getElementById('app-entrypoint');
 applicationEntrypoint ? ReactDOM.render(<App />, applicationEntrypoint) : false;
