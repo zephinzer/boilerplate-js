@@ -1,11 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const webpack = require('webpack');
 
 const convertToKoa = require('koa-connect');
 const connectHistoryApiFallback = require('connect-history-api-fallback');
 
 const WebpackHtmlPlugin = require('html-webpack-plugin');
 const WebpackBuildHashPlugin = require('webpack-plugin-hash');
+const WebpackDefinePlugin = webpack.DefinePlugin;
 
 const PATH_BUILD = path.join(process.cwd(), './dist');
 const PATH_DEV = path.join(process.cwd(), './serve');
@@ -71,6 +73,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new WebpackDefinePlugin({
+      'global.app.environment': `"${process.env.NODE_ENV || 'development'}"`,
+    }),
     new WebpackHtmlPlugin({
       template: PATH_HTML,
       filename: './index.html',

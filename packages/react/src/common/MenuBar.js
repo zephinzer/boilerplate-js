@@ -63,7 +63,7 @@ class MenuBar extends React.Component {
   render() {
     const {classes} = this.props;
     return (
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar>
           <div>
             <IconButton
