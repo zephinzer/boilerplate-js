@@ -77,7 +77,7 @@ function loadVersionMetrics(metrics) {
   const humanTimestamp = `${now.toDateString()} ${now.toTimeString()}`;
   const buildHash =
     (fs.existsSync(VERSION_PATH)) ?
-      fs.readFileSync(VERISON_PATH).toString()
+      fs.readFileSync(VERSION_PATH).toString()
       : 'unknown';
   metrics.version.labels(
     buildHash,
