@@ -1,6 +1,7 @@
 import actions from './actions';
 
 const {
+  LOAD_DATA,
   SAVE_NAME,
   SAVE_BIO,
   SAVE_EMAIL,
@@ -8,12 +9,13 @@ const {
   SAVE_PASSWORD,
 } = actions.types;
 
-const initialState = {
+export const initialState = {
   name: '',
   bio: '',
   email: '',
   username: '',
   password: '',
+  loaded: false,
 };
 
 /**
@@ -25,18 +27,40 @@ const initialState = {
  * @return {Object} - updated state
  */
 export default function profileReducer(state = initialState, action) {
+  let newState;
   switch (action.type) {
+    case LOAD_DATA:
+      return ({...state, ...action.data, loaded: true});
     case SAVE_NAME:
-      return ({...state, name: action.value});
+      newState = {...state, name: action.value};
+      saveToLocalStorage(newState);
+      return newState;
     case SAVE_BIO:
-      return ({...state, bio: action.value});
+      newState = {...state, bio: action.value};
+      saveToLocalStorage(newState);
+      return newState;
     case SAVE_EMAIL:
-      return ({...state, email: action.value});
+      newState = {...state, email: action.value};
+      saveToLocalStorage(newState);
+      return newState;
     case SAVE_USERNAME:
-      return ({...state, username: action.value});
+      newState = {...state, username: action.value};
+      saveToLocalStorage(newState);
+      return newState;
     case SAVE_PASSWORD:
-      return ({...state, password: action.value});
+      newState = {...state, password: action.value};
+      saveToLocalStorage(newState);
+      return newState;
     default:
       return state;
   }
+};
+
+/**
+ * Saves the :state to the local storage.
+ *
+ * @param {Object} state
+ */
+function saveToLocalStorage(state) {
+  localStorage.setItem('profile', JSON.stringify(state));
 };

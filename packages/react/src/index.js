@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
+import reduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 import MenuBar from './common/MenuBar';
 import Home from './home';
@@ -19,14 +20,17 @@ console.info(global.app.environment);
 const rootReducer = combineReducers({
   profile: profileReducer,
 });
-const enhancers = applyMiddleware(
-  logger
-);
+let enhancers = [reduxThunk];
+if (global.app.environment === 'development') {
+  enhancers.push(logger);
+}
+enhancers = applyMiddleware(...enhancers);
+if (global.app.environment === 'development') {
+  enhancers = composeWithDevTools(enhancers);
+}
 const rootStore = createStore(
   rootReducer,
-  (global.app.environment === 'development') ?
-    composeWithDevTools(enhancers)
-    : enhancers
+  enhancers
 );
 
 /**
