@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {withStyles} from '@material-ui/core/styles';
 import {withRouter} from 'react-router-dom';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const styles = {
   titleText: {
@@ -63,58 +64,60 @@ class MenuBar extends React.Component {
   render() {
     const {classes} = this.props;
     return (
-      <AppBar position="sticky">
-        <Toolbar>
-          <div>
-            <IconButton
-              color="inherit"
-              onClick={this.handleMenu}
+      <ClickAwayListener onClickAway={this.handleMenu}>
+        <AppBar position="sticky">
+          <Toolbar>
+            <div>
+              <IconButton
+                color="inherit"
+                onClick={this.handleMenu}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                anchorEl={this.state.menuAnchor}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={this.state.menuOpen}
+              >
+                <MenuItem
+                  onClick={this.handleNavigateTo('/')}
+                >
+                  Home
+                </MenuItem>
+                <MenuItem
+                  onClick={this.handleNavigateTo('/profile')}
+                >
+                  Profile
+                </MenuItem>
+                <MenuItem
+                  onClick={this.handleNavigateTo('/search')}
+                >
+                  Search
+                </MenuItem>
+                <MenuItem
+                  onClick={this.handleNavigateTo('/settings')}
+                >
+                  Settings
+                </MenuItem>
+                <MenuItem
+                  onClick={this.handleNavigateTo('/user')}
+                >
+                  Users
+                </MenuItem>
+              </Menu>
+            </div>
+            <Typography
+              variant="title"
+              className={classes.titleText}
             >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              anchorEl={this.state.menuAnchor}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={this.state.menuOpen}
-            >
-              <MenuItem
-                onClick={this.handleNavigateTo('/')}
-              >
-                Home
-              </MenuItem>
-              <MenuItem
-                onClick={this.handleNavigateTo('/profile')}
-              >
-                Profile
-              </MenuItem>
-              <MenuItem
-                onClick={this.handleNavigateTo('/search')}
-              >
-                Search
-              </MenuItem>
-              <MenuItem
-                onClick={this.handleNavigateTo('/settings')}
-              >
-                Settings
-              </MenuItem>
-              <MenuItem
-                onClick={this.handleNavigateTo('/user')}
-              >
-                Users
-              </MenuItem>
-            </Menu>
-          </div>
-          <Typography
-            variant="title"
-            className={classes.titleText}
-          >
-            Boilerplate-React
-          </Typography>
-        </Toolbar>
-      </AppBar>
+              Boilerplate-React
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </ClickAwayListener>
     );
   }
 };
