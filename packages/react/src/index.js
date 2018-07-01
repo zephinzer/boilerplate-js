@@ -7,18 +7,16 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
 import reduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
-import MenuBar from './common/MenuBar';
 import Home from './home';
-import Profile from './profile';
-import profileReducer from './profile/duck';
-import Settings from './settings';
-import Search from './search';
-import User, {UserId} from './user';
+import demoReducer from './__demo/_duck';
+import Demo from './__demo';
+
+import './index.css';
 
 console.info(global.app.environment);
 
 const rootReducer = combineReducers({
-  profile: profileReducer,
+  demo: demoReducer,
 });
 let enhancers = [reduxThunk];
 if (global.app.environment === 'development') {
@@ -48,17 +46,10 @@ export default class App extends React.Component {
         <Provider store={rootStore}>
           <Router>
             <div>
-              <MenuBar />
               <Route exact path="/" component={Home} />
-              {/* demonstrates custom path */}
-              <Route path="/profile" component={Profile} />
-              {/* demonstrates sub routing */}
-              <Route path="/settings" component={Settings} />
-              {/* demonstrates query parameter search */}
-              <Route path="/search" component={Search} />
-              {/* demonstrates url parameter search */}
-              <Route path="/user/:id" component={UserId} />
-              <Route exact path="/user" component={User} />
+              {/* TODO: remove /__demo route */}
+              <Route path="/__demo" component={Demo} />
+              {/* add more routes as you need */}
             </div>
           </Router>
         </Provider>
@@ -67,7 +58,7 @@ export default class App extends React.Component {
   }
 };
 
-(global.app.environment !== 'development')
+(global.app.environment === 'development')
   && (module.hot)
   && module.hot.accept();
 const applicationEntrypoint = document.getElementById('app-entrypoint');
