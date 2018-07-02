@@ -13,13 +13,7 @@ function gracefulExit(serverInstance) {
   serverInstance.on('error', (err) => {
     console.error('The following error was reported:');
     console.error(err);
-    console.info('Terminating in 5 seconds.');
-    const ellipsis = () => {
-      process.stdout.write('.');
-      setTimeout(ellipsis, 1000);
-    };
-    ellipsis();
-    setTimeout(shutdown.bind(null, serverInstance), 5000);
+    shutdown(serverInstance);
   });
 
   process.on('SIGINT', () => {

@@ -7,6 +7,7 @@ const connectHistoryApiFallback = require('connect-history-api-fallback');
 
 const WebpackHtmlPlugin = require('html-webpack-plugin');
 const WebpackBuildHashPlugin = require('webpack-plugin-hash');
+const WebpackFaviconsPlugin = require('favicons-webpack-plugin');
 const WebpackDefinePlugin = webpack.DefinePlugin;
 
 const PATH_BUILD = path.join(process.cwd(), './dist');
@@ -101,5 +102,6 @@ module.exports = {
         }
       },
     }),
+    new WebpackFaviconsPlugin(path.join(PATH_SRC, './assets/icon.png')),
   ],
 };
